@@ -32,23 +32,49 @@ get '/logout' do
   redirect to '/'
 end
 
-
 post '/create_user' do
   if user_already_exists?(params[:username], params[:password])
-  @status = "user already exists"
   else
     User.create(:username => params[:username], 
                 :password => params[:password])
     session[:username] = params[:username]
-  @status = "#{params[:username]} is created"
   end 
-  erb :index
+  redirect to '/'
 end
 
 post '/login' do
   if user_already_exists?(params[:username], params[:password])
-  @status = "successfully logged in";
   session[:username] = params[:username]
   end
-  erb :index
+  redirect to '/'
+end
+
+post '/postvote' do
+  post_id = params[:post_id]
+  user_id = params[:user_id]
+  post_vote = PostVote.create(:user_id => user_id,
+                  :post_id => post_id,
+                  :upvoted => true)
+
+  if request.xhr?
+    content_type :json
+    post_vote.to_json
+  else
+    redirect to '/'
+  end
+end
+
+post '/commentvote' do
+  comment_id = params[:comment_id]
+  user_id = params[:user_id]
+  comment_vote = CommentVote.create(:user_id => user_id,
+                  :comment_id => comment_id,
+                  :upvoted => true)
+
+  if request.xhr?
+    content_type :json
+    comment_vote.to_json
+  else
+    redirect to '/'
+  end
 end

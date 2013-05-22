@@ -11,3 +11,25 @@ def user_already_exists?(username, password)
     User.find_by_username(username).password == password
   end
 end
+
+def post_not_voted?(post_id)
+  if current_user
+    user_id = current_user.id
+    if PostVote.find_all_by_post_id_and_user_id_and_upvoted(post_id, user_id, true).count > 0
+      return false
+    else
+      return true
+    end
+  end
+end
+
+def comment_not_voted?(comment_id)
+  if current_user
+    user_id = current_user.id
+    if CommentVote.find_all_by_comment_id_and_user_id_and_upvoted(comment_id, user_id, true).count > 0
+      return false
+    else
+      return true
+    end
+  end
+end

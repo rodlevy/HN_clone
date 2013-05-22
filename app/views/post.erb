@@ -1,10 +1,30 @@
-<li> Title <%=@post.title%></li>
+<%if current_user && post_not_voted?(@post.id)%>
+    <a href="/postvote" 
+      class="post-vote" data-user-id="<%= current_user.id %>" 
+      data-post-id="<%= @post.id %>">
+      Vote
+    </a>
+<%end%>
+<%= PostVote.find_all_by_post_id_and_upvoted(@post.id, true).count %>
+
+<li> Title: <%=@post.title%></li>
 <li>URL  <%=@post.url%> </li>
 <li><a href='/users/<%=@post.user_id%>'>User <%=@post.user_id%> </a></li>
 <li>Created on: <%= @post.created_at%> </li>
 <br>
+
+
 <p>Comments:</p>
 <% Comment.find_all_by_post_id(@post.id).each do |comment| %>
+
+<%if current_user && comment_not_voted?(comment.id)%>
+    <a href="/commentvote" 
+      class="comment-vote" data-user-id="<%= current_user.id %>" 
+      data-comment-id="<%= comment.id %>">
+      Vote
+    </a>
+<%end%>
+<%= CommentVote.find_all_by_comment_id_and_upvoted(comment.id, true).count %>
 <li><%=comment.body%> ### <%=comment.created_at%> </li>
 <% end %>
 <br>

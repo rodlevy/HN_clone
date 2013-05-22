@@ -1,13 +1,23 @@
-<%= @status %>
-
 Hacker News
 
 <%Post.all.each do |post|%>
-<li> <a href='/posts/<%=post.id%>'>Title <%=post.title%> </a></li>
+<li> 
+  <%if current_user && post_not_voted?(post.id)%>
+    <a href="/postvote" 
+      class="post-vote" data-user-id="<%= current_user.id %>" 
+      data-post-id="<%= post.id %>">
+      Upvote
+    </a>
+  <%end%>
+  <%= PostVote.find_all_by_post_id_and_upvoted(post.id, true).count %>
+</li>
+<li>Title: <a href='/posts/<%=post.id%>'> <%=post.title%> </a></li>
 <li> URL  <%=post.url%> </li>
 <li> <a href='/users/<%=post.user_id%>'>User <%=post.user_id%></a> </li>
 <li> Created on <%= post.created_at%> </li>
+<br><br>
 <% end %>
+
 
 
 
