@@ -1,0 +1,6 @@
+User: <%=User.find(@user_id).username%>
+Created At:  <%= User.find(@user_id).created_at%>
+
+<a href = '/users/<%=@user_id%>/posts'> submissions</a>
+<a href = '/users/<%=@user_id%>/comments'> comments</a>
+

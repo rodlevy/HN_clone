@@ -1,13 +1,8 @@
-<%= @status %>
+<%Post.find_all_by_user_id(@user_id).each do |post|%>
 
-Hacker News
-
-<%Post.all.each do |post|%>
 <li> <a href='/posts/<%=post.id%>'>Title <%=post.title%> </a></li>
 <li> URL  <%=post.url%> </li>
 <li> <a href='/users/<%=post.user_id%>'>User <%=post.user_id%></a> </li>
 <li> Created on <%= post.created_at%> </li>
+
 <% end %>
-
-
-

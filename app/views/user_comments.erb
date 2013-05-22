@@ -1,0 +1,5 @@
+<%Comment.find_all_by_user_id(@user_id).each do |comment|%>
+<li>Comment: <%= comment.body %> </li>
+<li>Created on <%= comment.created_at%> </li>
+
+<% end %>

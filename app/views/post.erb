@@ -1,0 +1,11 @@
+<li> Title <%=@post.title%></li>
+<li>URL  <%=@post.url%> </li>
+<li><a href='/users/<%=@post.user_id%>'>User <%=@post.user_id%> </a></li>
+<li>Created on: <%= @post.created_at%> </li>
+<br>
+<p>Comments:</p>
+<% Comment.find_all_by_post_id(@post.id).each do |comment| %>
+<li><%=comment.body%> ### <%=comment.created_at%> </li>
+<% end %>
+<br>
+

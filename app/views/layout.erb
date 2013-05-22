@@ -18,6 +18,15 @@
   <title></title>
 </head>
 <body>
+  <a href="/">Hacker News</a>
+  <br>
+  <% if current_user %>
+  <p>Current User = <%= current_user.username %></p>
+  <a href="/logout">Logout</a>
+  <% else %>
+  <a href="/login">Login</a>
+  <% end %>
+  <br><br>
   <%= yield %>
 </body>
 </html>
